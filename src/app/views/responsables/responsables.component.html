@@ -1,0 +1,113 @@
+<div class="row justify-content-center">
+    <div class="col-8 col-xs-12">
+        <div class="card">
+            <div class="card-header"> Generar Responsable</div>
+            <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Nombre completo</mat-label>
+                                <input matInput formControlName="NAME">
+                                <mat-error *ngIf="form.controls.NAME.errors?.required">El nombre completo es requerido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Correo electrónico</mat-label>
+                                <input matInput formControlName="EMAIL">
+                                <mat-error *ngIf="form.controls.EMAIL.errors?.required">El correo electrónico es
+                                    requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <button mat-raised-button type="submit" color="primary"
+                                [disabled]="form.invalid">Guardar</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-8 col-xs-12 ">
+
+        <div class="card">
+            <div class="card-header"> Responsables Creados</div>
+            <div class="card-body">
+                <mat-form-field appearance="standard">
+                    <mat-label>Buscar</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" #input>
+                </mat-form-field>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="full-width">
+
+                        <ng-container matColumnDef="NAME">
+                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                            <td mat-cell *matCellDef="let row"> {{row.NAME }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="EMAIL">
+                            <th mat-header-cell *matHeaderCellDef> Correo Electrónico </th>
+                            <td mat-cell *matCellDef="let row"> {{row.EMAIL }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="GENERAR">
+                            <th mat-header-cell *matHeaderCellDef class="text-center"> Crear Empresa</th>
+                            <td mat-cell *matCellDef="let row" class="text-center">
+                                <button mat-icon-button color="primary" (click)="addEmpresa(row)" >
+                                    <mat-icon>bookmark_add</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="expandedDetail">
+                            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                                <div class="example-element-detail"
+                                    [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+                                    *ngFor="let item of element.EMPRESA">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="name"> {{item.NAME}} </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="example-element-symbol"> {{item.ADRESS}} </div>
+                                        </div>
+                                        <div class="col-6 col-xs-12">
+                                            <div class="example-element-name"> {{item.EMAIL}} </div>
+                                        </div>
+                                        <div class="col-6 col-xs-12">
+                                            <div class="example-element-name">+56 {{item.TELEPHONE}} </div>
+                                        </div>
+                                        <mat-divider></mat-divider>
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                            (click)="expandedElement = expandedElement === row ? null : row" class="cursor"></tr>
+
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">No existen responsables segun el parametro de busqueda</td>
+                        </tr>
+                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row">
+
+                        </tr>
+                    </table>
+
+                    <mat-paginator #paginator [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

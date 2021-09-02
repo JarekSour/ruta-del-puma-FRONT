@@ -1,0 +1,125 @@
+<div class="row justify-content-center">
+    <div class="col-8 col-xs-12">
+        <div class="card">
+            <div class="card-header"> Crear Plan</div>
+            <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Nombre del plan</mat-label>
+                                <input matInput formControlName="NAME">
+                                <mat-error *ngIf="form.controls.NAME.errors?.required">El nombre del plan es requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Valor de membresia</mat-label>
+                                <input matInput formControlName="MEMBERSHIP" appNumber>
+                                <mat-error *ngIf="form.controls.MEMBERSHIP.errors?.required">El valor de la membresia es requerida</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Valor a pagar mensual</mat-label>
+                                <input matInput formControlName="MONTHLY" appNumber>
+                                <mat-error *ngIf="form.controls.MONTHLY.errors?.required">El valor a pagar mensual es requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Limite de imagenes permitidas</mat-label>
+                                <input matInput formControlName="LIMIT_IMAGE" appNumber>
+                                <mat-error *ngIf="form.controls.LIMIT_IMAGE.errors?.required">El limite de imagenes es requerido</mat-error>
+                                <mat-error *ngIf="form.controls.LIMIT_IMAGE.errors?.max">El limite de imagenes supera el maximo</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Limite de caracteres permitidos</mat-label>
+                                <input matInput formControlName="LIMIT_CHAR" appNumber>
+                                <mat-error *ngIf="form.controls.LIMIT_CHAR.errors?.required">El limite de caracteres es requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <button mat-raised-button type="submit" color="primary" [disabled]="form.invalid">Guardar</button>
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-8 col-xs-12 ">
+
+        <div class="card">
+            <div class="card-header"> Planes Creados</div>
+            <div class="card-body">
+                <mat-form-field appearance="standard">
+                    <mat-label>Buscar</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" #input>
+                </mat-form-field>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" class="full-width">
+
+                        <ng-container matColumnDef="NAME">
+                            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                            <td mat-cell *matCellDef="let row"> {{row.NAME }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="MEMBERSHIP">
+                            <th mat-header-cell *matHeaderCellDef> Membresia </th>
+                            <td mat-cell *matCellDef="let row"> {{row.MEMBERSHIP | currencyFormat}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="MONTHLY">
+                            <th mat-header-cell *matHeaderCellDef> Mensual </th>
+                            <td mat-cell *matCellDef="let row"> {{row.MONTHLY | currencyFormat}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="LIMIT_IMAGE">
+                            <th mat-header-cell *matHeaderCellDef> N° Imagenes </th>
+                            <td mat-cell *matCellDef="let row"> {{row.LIMIT_IMAGE}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="LIMIT_CHAR">
+                            <th mat-header-cell *matHeaderCellDef> N° Caracteres </th>
+                            <td mat-cell *matCellDef="let row"> {{row.LIMIT_CHAR}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="STATUS">
+                            <th mat-header-cell *matHeaderCellDef> Estado </th>
+                            <td mat-cell *matCellDef="let row">
+                                <label class="switch switch-label switch-pill switch-success">
+                                    <input type="checkbox" class="switch-input" [checked]="row.STATUS"
+                                        (change)="onChangeStatusPlan(row)">
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">No existen planes segun el parametro de busqueda</td>
+                        </tr>
+                    </table>
+
+                    <mat-paginator #paginator [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

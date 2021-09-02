@@ -1,0 +1,38 @@
+// Here you can add other styles
+.cursor{
+    cursor: pointer;
+}
+
+.main .container-fluid {
+    padding: 30px 30px;
+}
+
+.full-width{
+    width: 100%;
+}
+
+.text-green{
+    color:#04ca04;
+}
+
+.text-red{
+    color: #e82424;
+}
+
+button{
+    outline:none !important;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 1rem 1.25rem 1.25rem 1.25rem !important;
+}
+
+.justify-content-center {
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
+}
+
+.mat-simple-snackbar {
+    color: white !important;
+}
