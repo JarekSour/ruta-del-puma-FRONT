@@ -1,9 +1,9 @@
 export const environment = {
     production: true,
-    url_base: 'http://localhost:8000',
+    url_base: 'https://api.rutadelpuma.cl',
 
     admin: {
-        login: '/adm-login'
+        login: '/admin/login'
     },
     planes: {
         getPlanes: '/planes/get-planes',
@@ -14,6 +14,22 @@ export const environment = {
         getResponsables: '/responsable/get-responsables',
         updateResponsable: '/responsable/update-responsable',
         addResponsable: '/responsable/add-responsable'
-    }
+    },
+    imagenes: {
+        uploadImage: '/imagenes/upload-image',
+        getAlbum: '/imagenes/get-album',
+        deleteImage: '/imagenes/delete-image'
+    },
+    empresa: {
+        getEmpresas: '/empresa/get-empresas',
+        getEmpresa: '/empresa/get-empresa',
+        addEmpresa: '/empresa/new-empresa',
+        updateEmpresa: '/empresa/update-empresa'
+    },
+    suscripcion: {
+        updateSuscripcion: '/suscripcion/update-suscripcion',
+        addSuscripcion: '/suscripcion/add-suscripcion'
+    },
+    categorias: ['Transporte', 'Comercio', '¿Dónde comer?', '¿Dónde dormir?', 'Salud y belleza', '¡Imperdibles de visitar!']
 
 };

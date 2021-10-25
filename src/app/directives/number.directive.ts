@@ -32,7 +32,6 @@ export class NumberDirective {
     }
 
     @HostListener('keydown', ['$event']) onKeyDown(e: KeyboardEvent) {
-
         let cursorPosition: number = (e.target as HTMLInputElement)['selectionStart'] ?? 0;
         let originalValue: string = (e.target as HTMLInputElement)['value'];
         let key: string = this.getName(e);

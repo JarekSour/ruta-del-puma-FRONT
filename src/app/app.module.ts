@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -46,6 +46,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { GoogleLoginProvider } from 'angularx-social-login';
 import { MaterialModule } from './material.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { EmpresasComponent } from './views/empresas/empresas.component';
+import { PlanesComponent } from './views/planes/planes.component';
+import { CurrencyFormat } from './pipes/amount.pipe';
+import { NumberDirective } from './directives/number.directive';
 
 @NgModule({
     imports: [
@@ -65,7 +70,8 @@ import { MaterialModule } from './material.module';
         IconSetModule.forRoot(),
         SocialLoginModule,
         HttpClientModule,
-        MaterialModule
+        MaterialModule,
+        NgxSpinnerModule
     ],
     declarations: [
         AppComponent,
@@ -94,6 +100,7 @@ import { MaterialModule } from './material.module';
             } as SocialAuthServiceConfig
         }
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

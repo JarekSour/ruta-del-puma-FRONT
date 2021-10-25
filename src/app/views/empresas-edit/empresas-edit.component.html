@@ -1,0 +1,249 @@
+<div class="row justify-content-center">
+    <div class="col-8 col-xs-12 ">
+
+        <div class="text-right mb-3">
+            <mat-slide-toggle (change)="onChangeSlideEditor()">MODO EDITOR</mat-slide-toggle>
+        </div>
+
+        <div class="card" [ngClass]="slideEditor ? 'card-edit' : ''">
+            <div class="card-header"> Empresa</div>
+            <div class="card-body">
+                <form [formGroup]="formEmpresa" (ngSubmit)="onSubmint()">
+                    <ng-template matStepLabel>Completa los datos de la empresa</ng-template>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Nombre Comercial</mat-label>
+                                <input matInput formControlName="NAME">
+                                <mat-error *ngIf="formEmpresa.controls.NAME.errors?.required">El nombre
+                                    comercial es requerido</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Forma de pago</mat-label>
+                                <mat-select formControlName="METHOD">
+                                    <mat-option value="Efectivo">Efectivo</mat-option>
+                                    <mat-option value="Transferencia">Transferencia</mat-option>
+                                    <mat-option value="Debito">Debito</mat-option>
+                                    <mat-option value="Credito">Credito</mat-option>
+                                    <mat-option value="Cheque">Cheque</mat-option>
+                                    <mat-option value="Canje">Canje</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formEmpresa.controls.METHOD.errors?.required">La
+                                    forma de pago es requerida</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Teléfono celular</mat-label>
+                                <span matPrefix>+56 &nbsp;</span>
+                                <input matInput formControlName="TELEPHONE" maxlength="9" appNumber>
+                                <mat-error *ngIf="formEmpresa.controls.TELEPHONE.errors?.required">El teléfono
+                                    celular es requerido </mat-error>
+                                <mat-error *ngIf="formEmpresa.controls.TELEPHONE.errors?.minlength">El teléfono
+                                    celular debe tener 9 números</mat-error>
+                                <mat-error *ngIf="formEmpresa.controls.TELEPHONE.errors?.maxlength">El teléfono
+                                    celular debe tener 9 números</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Correo electrónico</mat-label>
+                                <input matInput formControlName="EMAIL">
+                                <mat-error *ngIf="formEmpresa.controls.EMAIL.errors?.required">El correo
+                                    electrónico es requerido</mat-error>
+                                <mat-error *ngIf="formEmpresa.controls.EMAIL.errors?.invalid">El correo
+                                    electrónico es invalido</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Dirección</mat-label>
+                                <input matInput formControlName="ADRESS">
+                                <mat-error *ngIf="formEmpresa.controls.ADRESS.errors?.required">El nombre
+                                    completo es
+                                    requerido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Longitud / Latitud</mat-label>
+                                <input matInput formControlName="LATLON">
+                                <mat-error *ngIf="formEmpresa.controls.LATLON.errors?.required">El nombre
+                                    completo es
+                                    requerido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Categorias</mat-label>
+                                <mat-select formControlName="CATEGORIA" multiple>
+                                    <mat-option *ngFor="let cat of categoriasList" [value]="cat">{{cat}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formEmpresa.controls.CATEGORIA.errors?.required">Debes seleccionar al
+                                    menos una categoria</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Etiquetas</mat-label>
+                                <mat-chip-list #chipList formArrayName="ETIQUETA">
+                                    <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                                        [removable]="slideEditor" (removed)="removeChipTag(tag)">
+                                        {{tag}}
+                                        <mat-icon matChipRemove *ngIf="slideEditor">cancel</mat-icon>
+                                    </mat-chip>
+                                    <input placeholder="Agregar etiqueta..." [matChipInputFor]="chipList"
+                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                        (matChipInputTokenEnd)="addChipTag($event)" [disabled]="!slideEditor">
+                                </mat-chip-list>
+                                <mat-error *ngIf="formEmpresa.controls.ETIQUETA.errors?.required">Debes agregar al menos
+                                    una etiqueta</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <mat-form-field class="full-width">
+                                <mat-label>Descripción</mat-label>
+                                <textarea matInput formControlName="DESCRIPTION" [maxlength]="maxlengthDescription"
+                                    rows="8"></textarea>
+                                <mat-hint align="end">{{formEmpresa.controls.DESCRIPTION.value.length}} /
+                                    {{maxlengthDescription}}
+                                </mat-hint>
+                                <mat-error *ngIf="formEmpresa.controls.DESCRIPTION.errors?.required">La
+                                    descripción es requerida</mat-error>
+                                <mat-error *ngIf="formEmpresa.controls.DESCRIPTION.errors?.maxlength">La
+                                    descripción supera el máximo de carácteres
+                                    ({{formEmpresa.controls.DESCRIPTION.value.length}} /
+                                    {{maxlengthDescription}})</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div *ngIf="slideEditor" class="text-right mt-3">
+                        <button mat-stroked-button color="primary" [disabled]="formEmpresa.invalid">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card" [ngClass]="slideEditor?'card-edit':''">
+            <div class="card-header"> Imagenes</div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-12 avatar-image" [ngClass]="slideEditor ? 'avatar-edit':''">
+                        <input #inputAvatar type="file" id="input-avatar" accept="image/*"
+                            (change)="changeFileAvatar($event)" (click)="clickFileAvatar()" [disabled]="!slideEditor" />
+                        <label for="input-avatar">
+                            <div *ngIf="!avatar">
+                                <span class="material-icons-outlined">
+                                    image
+                                </span>
+                                <p>Click para agregar imagen de vista previa</p>
+                                <em>Imagen que se mostrara al listar todas las empresas</em>
+                            </div>
+                            <img *ngIf="avatar" [src]="avatar" alt="" for="input-avatar">
+                        </label>
+                    </div>
+                </div>
+
+                <mat-divider></mat-divider>
+
+                <div *ngIf="imagesSuccess >= maxImageToUpload" class="alert alert-success" role="alert">
+                    Haz alcanzado el máximo de images permitidas según el plan escogido
+                </div>
+
+                <div *ngIf="imagesSuccess < maxImageToUpload && slideEditor" class="justify-content-center upload">
+                    <div class="col-md-12">
+                        <input #inputFile type="file" id="input-file" accept="image/*" (change)="changeFile($event)"
+                            (click)="clickFile()" />
+                        <label for="input-file" class="full-width">
+                            <div class="body cursor" id="drop">
+                                <span class="material-icons">cloud_upload</span>
+                                <p>Haz Click para cargar Imagenes, máximo {{maxImageToUpload-1}}</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div *ngFor="let item of images" class="col-md-4" style="position: relative;">
+                            <div class="dvBtnDelete" *ngIf="slideEditor && item.status">
+                                <button mat-mini-fab color="warn" (click)="onDeleteImage(item)">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </div>
+                            <img class="full-width" [src]="item.base64">
+                            <ngx-spinner [name]="item.name" [fullScreen]="false" type="line-scale" size="default">
+                            </ngx-spinner>
+                            <div *ngIf="item.status == false" class="error">
+                                <span class="material-icons">
+                                    error
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Suscripciones</div>
+            <div class="card-body">
+                <mat-form-field appearance="standard">
+                    <mat-label>Buscar</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" #input>
+                </mat-form-field>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" class="full-width">
+
+                        <ng-container matColumnDef="FECHA_INICIO">
+                            <th mat-header-cell *matHeaderCellDef> Fecha de inicio </th>
+                            <td mat-cell *matCellDef="let row"> {{row.DATE_START | date:'dd/MM/YYYY' }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="FECHA_TERMINO">
+                            <th mat-header-cell *matHeaderCellDef> Fecha de Termino </th>
+                            <td mat-cell *matCellDef="let row"> {{row.DATE_END | date:'dd/MM/YYYY' }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="ESTADO">
+                            <th mat-header-cell *matHeaderCellDef> Estado </th>
+                            <td mat-cell *matCellDef="let row" [ngClass]="row.STATUS == 'pagado' ? 'pagado': 'pendiente'"> {{row.STATUS }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="ACTIVAR">
+                            <th mat-header-cell *matHeaderCellDef> Validar Pago </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-raised-button color="primary" (click)="validarSuscripcion(row)" *ngIf="row.STATUS != 'pagado'">Validar</button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+                    <mat-paginator #paginator [pageSizeOptions]="[10, 20, 50]"></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner name="loader" showSpinner="true" [fullScreen]="true" type="ball-scale-multiple" size="large">
+    <p class="textLoader">{{textLoader}}</p>
+</ngx-spinner>

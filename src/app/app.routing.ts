@@ -9,7 +9,6 @@ import { LoginGuard } from './guards/login/login.guard';
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { LoginComponent } from './views/login/login.component';
-import { RegisterComponent } from './views/register/register.component';
 
 export const routes: Routes = [
     {
@@ -39,13 +38,6 @@ export const routes: Routes = [
         }, canActivate:[LoginGuard]
     },
     {
-        path: 'register',
-        component: RegisterComponent,
-        data: {
-            title: 'Register Page'
-        }
-    },
-    {
         path: '',
         component: DefaultLayoutComponent,
         data: {
@@ -64,6 +56,20 @@ export const routes: Routes = [
                 path: 'empresas',
                 loadChildren: () => import('./views/empresas/empresas.module').then(m => m.EmpresasModule)
             },
+            {
+                path: 'new-empresa',
+                loadChildren: () => import('./views/empresas-new/empresas-new.module').then(m => m.EmpresasNewModule)
+            },
+            {
+                path: 'edit-empresa',
+                loadChildren: () => import('./views/empresas-edit/empresas-edit.module').then(m => m.EmpresasEditModule)
+            },
+
+
+
+
+
+
             {
                 path: 'base',
                 loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule)

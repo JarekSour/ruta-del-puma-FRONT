@@ -1,23 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { EmpresasRoutingModule } from './empresas-routing.module';
-import { EmpresasComponent } from './empresas.component';
+import { EmpresasEditRoutingModule } from './empresas-edit-routing.module';
+import { EmpresasEditComponent } from './empresas-edit.component';
 import { MaterialModule } from '../../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+
 @NgModule({
     declarations: [
-        EmpresasComponent
+        EmpresasEditComponent
     ],
     imports: [
         CommonModule,
-        EmpresasRoutingModule,
+        EmpresasEditRoutingModule,
         MaterialModule,
         ReactiveFormsModule,
         FormsModule,
         NgxSpinnerModule
     ]
 })
-export class EmpresasModule { }
+export class EmpresasEditModule { }

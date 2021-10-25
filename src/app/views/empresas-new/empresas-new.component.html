@@ -1,0 +1,298 @@
+<div *ngIf="dvStepper" class="row justify-content-center">
+    <div class="col-8 col-xs-12">
+        <div class="card">
+            <div class="card-header"> Generar Empresa</div>
+            <div class="card-body">
+                <mat-vertical-stepper [linear]="true" #stepper>
+                    <mat-step [stepControl]="formResponsable">
+                        <form [formGroup]="formResponsable">
+                            <ng-template matStepLabel>Confirmar Responsable</ng-template>
+                            <div class="row  mt-3">
+                                <div class="col-md-12 mb-3">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Nombre</mat-label>
+                                        <input matInput formControlName="NAME_RESPONSABLE" readonly>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Correo electrónico</mat-label>
+                                        <input matInput formControlName="EMAIL_RESPONSABLE" readonly>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button mat-stroked-button color="primary" matStepperNext>Siguiente</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="formPlan">
+                        <form [formGroup]="formPlan">
+                            <ng-template matStepLabel>Selecciona el plan</ng-template>
+                            <mat-radio-group formControlName="ID_PLAN" class="mt-3">
+                                <table mat-table [dataSource]="dataSource" class="full-width mt-3">
+
+                                    <ng-container matColumnDef="NAME">
+                                        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.NAME }} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="MEMBERSHIP">
+                                        <th mat-header-cell *matHeaderCellDef> Membresia </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.MEMBERSHIP | currencyFormat}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="MONTHLY">
+                                        <th mat-header-cell *matHeaderCellDef> Mensual </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.MONTHLY | currencyFormat}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="LIMIT_IMAGE">
+                                        <th mat-header-cell *matHeaderCellDef> N° Imagenes </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.LIMIT_IMAGE}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="LIMIT_CHAR">
+                                        <th mat-header-cell *matHeaderCellDef> N° Caracteres </th>
+                                        <td mat-cell *matCellDef="let row"> {{row.LIMIT_CHAR}} </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="STATUS">
+                                        <th mat-header-cell *matHeaderCellDef> Seleccionado </th>
+                                        <td mat-cell *matCellDef="let row">
+                                            <mat-radio-button [value]="row.ID_PLAN"></mat-radio-button>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                                    <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell" colspan="4">No existen planes segun el parametro de
+                                            busqueda
+                                        </td>
+                                    </tr>
+                                </table>
+                            </mat-radio-group>
+                            <div class="text-right mt-3">
+                                <button mat-button matStepperPrevious>Atrás</button>
+                                <button mat-stroked-button color="primary" matStepperNext>Siguiente</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="formEmpresa">
+                        <form [formGroup]="formEmpresa">
+                            <ng-template matStepLabel>Completa los datos de la empresa</ng-template>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Nombre Comercial</mat-label>
+                                        <input matInput formControlName="NAME">
+                                        <mat-error *ngIf="formEmpresa.controls.NAME.errors?.required">El nombre
+                                            comercial es requerido</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Forma de pago</mat-label>
+                                        <mat-select formControlName="METHOD">
+                                            <mat-option value="Efectivo">Efectivo</mat-option>
+                                            <mat-option value="Transferencia">Transferencia</mat-option>
+                                            <mat-option value="Debito">Debito</mat-option>
+                                            <mat-option value="Credito">Credito</mat-option>
+                                            <mat-option value="Cheque">Cheque</mat-option>
+                                            <mat-option value="Canje">Canje</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="formEmpresa.controls.METHOD.errors?.required">La
+                                            forma de pago es requerida</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Teléfono celular</mat-label>
+                                        <span matPrefix>+56 &nbsp;</span>
+                                        <input matInput formControlName="TELEPHONE" maxlength="9" appNumber>
+                                        <mat-error *ngIf="formEmpresa.controls.TELEPHONE.errors?.required">El teléfono
+                                            celular es requerido </mat-error>
+                                        <mat-error *ngIf="formEmpresa.controls.TELEPHONE.errors?.minlength">El teléfono
+                                            celular debe tener 9 números</mat-error>
+                                        <mat-error *ngIf="formEmpresa.controls.TELEPHONE.errors?.maxlength">El teléfono
+                                            celular debe tener 9 números</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Correo electrónico</mat-label>
+                                        <input matInput formControlName="EMAIL">
+                                        <mat-error *ngIf="formEmpresa.controls.EMAIL.errors?.required">El correo
+                                            electrónico es requerido</mat-error>
+                                        <mat-error *ngIf="formEmpresa.controls.EMAIL.errors?.invalid">El correo
+                                            electrónico es invalido</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Dirección</mat-label>
+                                        <input matInput formControlName="ADRESS">
+                                        <mat-error *ngIf="formEmpresa.controls.ADRESS.errors?.required">El nombre
+                                            completo es
+                                            requerido
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Longitud / Latitud</mat-label>
+                                        <input matInput formControlName="LATLON">
+                                        <mat-error *ngIf="formEmpresa.controls.LATLON.errors?.required">El nombre
+                                            completo es
+                                            requerido
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Categorias</mat-label>
+                                        <mat-select formControlName="CATEGORIA" multiple>
+                                            <mat-option *ngFor="let cat of categoriasList" [value]="cat">{{cat}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="formEmpresa.controls.CATEGORIA.errors?.required">Debes seleccionar al menos una categoria</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Etiquetas</mat-label>
+                                        <mat-chip-list #chipList formArrayName="ETIQUETA">
+                                            <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                                                [removable]="slideEditor" (removed)="removeChipTag(tag)">
+                                                {{tag}}
+                                                <mat-icon matChipRemove >cancel</mat-icon>
+                                            </mat-chip>
+                                            <input placeholder="Agregar etiqueta..."
+                                                [matChipInputFor]="chipList"
+                                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                (matChipInputTokenEnd)="addChipTag($event)">
+                                        </mat-chip-list>
+                                        <mat-error *ngIf="formEmpresa.controls.ETIQUETA.errors?.required">Debes agregar al menos una etiqueta</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Descripción</mat-label>
+                                        <textarea matInput formControlName="DESCRIPTION"
+                                            [maxlength]="maxlengthDescription" rows="6"></textarea>
+                                        <mat-hint align="end">{{formEmpresa.controls.DESCRIPTION.value.length}} /
+                                            {{maxlengthDescription}}
+                                        </mat-hint>
+                                        <mat-error *ngIf="formEmpresa.controls.DESCRIPTION.errors?.required">La
+                                            descripción es requerida</mat-error>
+                                        <mat-error *ngIf="formEmpresa.controls.DESCRIPTION.errors?.maxlength">La
+                                            descripción supera el máximo de carácteres
+                                            ({{formEmpresa.controls.DESCRIPTION.value.length}} /
+                                            {{maxlengthDescription}})</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="text-right mt-3">
+                                <button mat-button matStepperPrevious>Atrás</button>
+                                <button mat-stroked-button color="primary" matStepperNext>Siguiente</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Finalizar</ng-template>
+                        <div class="mt-3">
+                            <p>¿Estás seguro que deseas crear la empresa?</p>
+                            <h4 class="font-weight-bold">{{formEmpresa.controls.NAME.value}}</h4>
+                            <p>a nombre de : <span
+                                    class="font-weight-bold">{{formResponsable.controls.NAME_RESPONSABLE.value}}</span>
+                            </p>
+                        </div>
+                        <div class="text-right mt-3">
+                            <button mat-button matStepperPrevious>Atrás</button>
+                            <button mat-stroked-button color="primary" (click)="onSubmit()">Crear Empresa</button>
+                        </div>
+                    </mat-step>
+                </mat-vertical-stepper>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="dvImageUploader" class="row justify-content-center">
+    <div class="col-8 col-xs-12">
+        <div class="card">
+            <div class="card-header"> Agregar Imagenes</div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-12 avatar-image">
+                        <input #inputAvatar type="file" id="input-avatar" accept="image/*"
+                            (change)="changeFileAvatar($event)" (click)="clickFileAvatar()" />
+                        <label for="input-avatar">
+                            <div *ngIf="!avatar">
+                                <span class="material-icons-outlined">
+                                    image
+                                </span>
+                                <p>Click para agregar imagen de vista previa</p>
+                                <em>Imagen que se mostrara al listar todas las empresas</em>
+                            </div>
+                            <img *ngIf="avatar" [src]="avatar" alt="" for="input-avatar">
+                        </label>
+                    </div>
+                </div>
+
+                <mat-divider></mat-divider>
+
+                <div *ngIf="imagesSuccess >= maxImageToUpload" class="alert alert-success" role="alert">
+                    Haz alcanzado el máximo de images permitidas según el plan escogido
+                </div>
+
+                <div *ngIf="imagesSuccess < maxImageToUpload"
+                    class="justify-content-center upload">
+                    <div class="col-md-12">
+                        <input #inputFile type="file" id="input-file" accept="image/*" (change)="changeFile($event)"
+                            (click)="clickFile()" />
+                        <label for="input-file" class="full-width">
+                            <div class="body cursor" id="drop">
+                                <span class="material-icons">cloud_upload</span>
+                                <p>Haz Click para cargar Imagenes, máximo {{maxImageToUpload-1}}</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div *ngFor="let item of images" class="col-md-4" style="position: relative;">
+                            <img class="full-width" [src]="item.base64">
+                            <ngx-spinner [showSpinner]="item.status == undefined" [fullScreen]="false" type="line-scale"
+                                size="default"></ngx-spinner>
+                            <div *ngIf="item.status == 1" class="success">
+                                <span class="material-icons">
+                                    check_circle
+                                </span>
+                            </div>
+                            <div *ngIf="item.status == 0" class="error">
+                                <span class="material-icons">
+                                    error
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner name="loader" showSpinner="true" [fullScreen]="true" type="ball-scale-multiple" size="large">
+    <p class="textLoader">{{textLoader}}</p>
+</ngx-spinner>

@@ -4,27 +4,22 @@ export const navItems: INavData[] = [
     {
         name: 'Inicio',
         url: '/dashboard',
-        icon: 'icon-speedometer'
+        icon: 'fa fa-home'
     },
     {
         name: 'Planes',
         url: '/planes',
-        icon: 'icon-drop'
-    },
-    {
-        name: 'Categorias',
-        url: '/Categorias',
-        icon: 'icon-drop'
+        icon: 'fa fa-file-text'
     },
     {
         name: 'Responsables',
         url: '/responsables',
-        icon: 'icon-drop'
+        icon: 'fa fa-user'
     },
     {
         name: 'Empresas',
         url: '/empresas',
-        icon: 'icon-drop'
+        icon: 'fa fa-building'
     },
     // {
     //     title: true,

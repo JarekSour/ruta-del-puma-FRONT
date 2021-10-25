@@ -89,7 +89,7 @@ export class ResponsablesComponent implements OnInit {
             EMAIL: row.EMAIL
         }
 
-        this.router.navigate(['/empresas'], {
+        this.router.navigate(['/new-empresa'], {
             queryParams: { data: btoa(JSON.stringify(json)) }
         })
     }

@@ -36,3 +36,32 @@ button{
 .mat-simple-snackbar {
     color: white !important;
 }
+
+.alert-danger {
+    color: #ffffff;
+    background-color: #ff4e4e;
+    border-color: #ff4e4e;
+}
+
+.alert-success{
+    color: #ffffff;
+    background-color: #00a93b;
+    border-color: #00a93b;
+}
+
+.textLoader{
+    color: #fff;
+}
+
+.modal-title {
+    margin-bottom: 0 !important;
+    line-height: 1.5 !important;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 0 !important;
+}
+
+// .cdk-overlay-container {
+//     z-index: 99999 !important;
+// }
