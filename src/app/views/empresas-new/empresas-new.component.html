@@ -159,7 +159,8 @@
                                             <mat-option *ngFor="let cat of categoriasList" [value]="cat">{{cat}}
                                             </mat-option>
                                         </mat-select>
-                                        <mat-error *ngIf="formEmpresa.controls.CATEGORIA.errors?.required">Debes seleccionar al menos una categoria</mat-error>
+                                        <mat-error *ngIf="formEmpresa.controls.CATEGORIA.errors?.required">Debes
+                                            seleccionar al menos una categoria</mat-error>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -169,16 +170,16 @@
                                         <mat-label>Etiquetas</mat-label>
                                         <mat-chip-list #chipList formArrayName="ETIQUETA">
                                             <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
-                                                [removable]="slideEditor" (removed)="removeChipTag(tag)">
+                                                (removed)="removeChipTag(tag)">
                                                 {{tag}}
-                                                <mat-icon matChipRemove >cancel</mat-icon>
+                                                <mat-icon matChipRemove>cancel</mat-icon>
                                             </mat-chip>
-                                            <input placeholder="Agregar etiqueta..."
-                                                [matChipInputFor]="chipList"
+                                            <input placeholder="Agregar etiqueta..." [matChipInputFor]="chipList"
                                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                                 (matChipInputTokenEnd)="addChipTag($event)">
                                         </mat-chip-list>
-                                        <mat-error *ngIf="formEmpresa.controls.ETIQUETA.errors?.required">Debes agregar al menos una etiqueta</mat-error>
+                                        <mat-error *ngIf="formEmpresa.controls.ETIQUETA.errors?.required">Debes agregar
+                                            al menos una etiqueta</mat-error>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -255,8 +256,7 @@
                     Haz alcanzado el máximo de images permitidas según el plan escogido
                 </div>
 
-                <div *ngIf="imagesSuccess < maxImageToUpload"
-                    class="justify-content-center upload">
+                <div *ngIf="imagesSuccess < maxImageToUpload" class="justify-content-center upload">
                     <div class="col-md-12">
                         <input #inputFile type="file" id="input-file" accept="image/*" (change)="changeFile($event)"
                             (click)="clickFile()" />

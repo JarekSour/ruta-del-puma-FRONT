@@ -105,9 +105,11 @@
                                         {{tag}}
                                         <mat-icon matChipRemove *ngIf="slideEditor">cancel</mat-icon>
                                     </mat-chip>
-                                    <input placeholder="Agregar etiqueta..." [matChipInputFor]="chipList"
+                                    <input placeholder="Agregar etiqueta..."
+                                        [matChipInputFor]="chipList"
                                         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                        (matChipInputTokenEnd)="addChipTag($event)" [disabled]="!slideEditor">
+                                        (matChipInputTokenEnd)="addChipTag($event)"
+                                        [disabled]="!slideEditor">
                                 </mat-chip-list>
                                 <mat-error *ngIf="formEmpresa.controls.ETIQUETA.errors?.required">Debes agregar al menos
                                     una etiqueta</mat-error>

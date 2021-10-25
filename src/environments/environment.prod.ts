@@ -30,6 +30,6 @@ export const environment = {
         updateSuscripcion: '/suscripcion/update-suscripcion',
         addSuscripcion: '/suscripcion/add-suscripcion'
     },
-    categorias: ['Transporte', 'Comercio', '¿Dónde comer?', '¿Dónde dormir?', 'Salud y belleza', '¡Imperdibles de visitar!']
+    categorias: ['Transporte', 'Comercio', '¿Dónde comer?', 'Actividades', '¿Dónde dormir?', 'Salud y belleza', '¡Imperdibles de visitar!']
 
 };
