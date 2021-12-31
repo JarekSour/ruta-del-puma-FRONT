@@ -64,7 +64,7 @@ export class EmpresasComponent implements OnInit {
 
     showEmpresa(row) {
         this.router.navigate(['/edit-empresa'], {
-            queryParams: { data: btoa(JSON.stringify(row)) }
+            queryParams: { data: btoa(unescape(encodeURIComponent(JSON.stringify(row)))) }
         })
     }
 
